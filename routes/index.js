@@ -1,6 +1,9 @@
 ﻿// Modular routes
+// TODO: Automate this
 
 exports.attach = function(app) {
-  var staticPages = require('./static');
-  staticPages.attach(app);
+  var staticRoute = require('./static'),
+      apiRoute = require('./api');
+  staticRoute.attach(app);
+  apiRoute.attach(app);
 };

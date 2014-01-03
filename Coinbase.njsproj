@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="routes\index.js" />
+    <Compile Include="routes\api.js" />
     <Compile Include="routes\static.js" />
     <Compile Include="server.js" />
     <Content Include=".gitignore" />
