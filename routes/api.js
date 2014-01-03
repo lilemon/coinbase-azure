@@ -23,9 +23,7 @@ exports.attach = function(app) {
       })
     }
     else {
-      res.send({
-        usd:  app.locals.exchange_rate_map['btc_to_usd']
-      });
+      res.send(app.locals.exchange_rate_map);
     }
   });
 };
