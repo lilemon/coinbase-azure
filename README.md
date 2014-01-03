@@ -1,4 +1,3 @@
-coinbase-azure
-==============
+﻿# Coinbase
 
-Coinbase on Azure
+

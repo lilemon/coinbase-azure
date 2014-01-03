@@ -7,6 +7,11 @@ lib-cov
 *.pid
 *.gz
 
+*.suo
+*.pubxml
+*.user
+
+obj
 pids
 logs
 results

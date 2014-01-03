@@ -1,0 +1,10 @@
+{
+  "name": "Coinbase",
+  "version": "0.0.0",
+  "description": "Coinbase",
+  "main": "src/server.js",
+  "author": {
+    "name": "mmansour",
+    "email": ""
+  }
+}
