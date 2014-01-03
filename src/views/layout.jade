@@ -1,0 +1,21 @@
+﻿doctype html
+html(lang="en")
+  head(prefix='og: http://ogp.me/ns#')
+    title Coinbase Azure Exchange
+    meta(charset="utf-8")
+    meta(property='og:title', content='Coinbase exchange ticker on Azure')
+    meta(property='og:type', content='website')
+    meta(property='og:url', content='http://coinbase.azurewebsites.net/')
+    meta(property='og:description', content='Coinbase real-time exchange ticker between Bitcoin and USD')
+    meta(property='og:image', content='https://coinbase.com/assets/logos/logo@2x.png')
+    meta(property='og:image:type', content='image/jpg')
+    meta(property='og:image:width', content='500')
+    meta(property='og:image:height', content='500')
+    meta(name="viewport", content="width=device-width")
+    block styles
+      link(rel="stylesheet", href="/stylesheets/core.css")
+    block head
+  body
+    block content
+    footer
+      | Hosted on Azure #{env}

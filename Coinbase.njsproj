@@ -30,14 +30,23 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="src\routes\index.js" />
+    <Compile Include="src\routes\static.js" />
     <Compile Include="src\server.js" />
     <Content Include=".gitignore" />
     <Content Include="LICENSE" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\public\stylesheets\core.css" />
+    <Content Include="src\views\index.jade" />
+    <Content Include="src\views\layout.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
+    <Folder Include="src\public\stylesheets\" />
+    <Folder Include="src\routes\" />
+    <Folder Include="src\public\" />
+    <Folder Include="src\views\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
   <ProjectExtensions>

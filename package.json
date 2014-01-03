@@ -1,10 +1,14 @@
 {
   "name": "Coinbase",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Coinbase",
   "main": "src/server.js",
   "author": {
-    "name": "mmansour",
-    "email": ""
+    "name": "Mohamed Mansour"
+  },
+  "dependencies": {
+    "express": "~3.4.7",
+    "request": "~2.30.0",
+    "jade": "~1.0.2"
   }
 }
