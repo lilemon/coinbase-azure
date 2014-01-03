@@ -19,3 +19,6 @@ body, html {
     color: #2a2a2a;
 }
 
+@-ms-viewport {
+    width: device-width;
+}
