@@ -2,7 +2,7 @@
   "name": "Coinbase",
   "version": "0.0.1",
   "description": "Coinbase",
-  "main": "src/server.js",
+  "main": "server.js",
   "author": {
     "name": "Mohamed Mansour"
   },

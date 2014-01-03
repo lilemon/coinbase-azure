@@ -13,7 +13,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>3b5b6cd4-e99b-4ed3-a808-6d05761a306d</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>src\server.js</StartupFile>
+    <StartupFile>server.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,23 +30,22 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src\routes\index.js" />
-    <Compile Include="src\routes\static.js" />
-    <Compile Include="src\server.js" />
+    <Compile Include="routes\index.js" />
+    <Compile Include="routes\static.js" />
+    <Compile Include="server.js" />
     <Content Include=".gitignore" />
     <Content Include="LICENSE" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="src\public\stylesheets\core.css" />
-    <Content Include="src\views\index.jade" />
-    <Content Include="src\views\layout.jade" />
+    <Content Include="public\stylesheets\core.css" />
+    <Content Include="views\index.jade" />
+    <Content Include="views\layout.jade" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\" />
-    <Folder Include="src\public\stylesheets\" />
-    <Folder Include="src\routes\" />
-    <Folder Include="src\public\" />
-    <Folder Include="src\views\" />
+    <Folder Include="public\stylesheets\" />
+    <Folder Include="routes\" />
+    <Folder Include="public\" />
+    <Folder Include="views\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
   <ProjectExtensions>

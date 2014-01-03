@@ -34,7 +34,6 @@ app.configure('development', function() {
   app.locals.pretty = true;
 });
 
-
 routes.attach(app);
 
 http.createServer(app).listen(app.get('port'), function() {
