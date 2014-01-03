@@ -2,16 +2,17 @@
 
 exports.attach = function(app) {
   var BASE_URL = 'https://coinbase.com/api/v1/',
-      EXCHANGE_RATE_ENDPOINT = BASE_URL + 'currencies/exchange_rates',
-      exchange_rate_map = {};
+      EXCHANGE_RATE_ENDPOINT = BASE_URL + 'currencies/exchange_rates';
+
+  app.locals.exchange_rate_map = {};
 
   app.get('/api/exchange_rate', function(req, res) {
     if (req.query.force) {
       request(EXCHANGE_RATE_ENDPOINT, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          exchange_rate_map = JSON.parse(body);
+          app.locals.exchange_rate_map = JSON.parse(body);
           res.send({
-            usd: exchange_rate_map['btc_to_usd']
+            usd: app.locals.exchange_rate_map['btc_to_usd']
           });
         }
         else {
@@ -23,7 +24,7 @@ exports.attach = function(app) {
     }
     else {
       res.send({
-        usd:  exchange_rate_map['btc_to_usd']
+        usd:  app.locals.exchange_rate_map['btc_to_usd']
       });
     }
   });
