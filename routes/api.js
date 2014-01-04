@@ -2,18 +2,23 @@
     BASE_URL = 'https://coinbase.com/api/v1/',
     EXCHANGE_RATE_ENDPOINT = BASE_URL + 'currencies/exchange_rates';
 
+function jsonp(data, req, res) {
+  if (req.query.callback) {
+    res.send(req.query.callback + '(' + JSON.stringify(data) + ');');
+  }
+  else {
+    res.send(data);
+  }
+}
+
 function refreshExchangeRateCache(app, req, res) {
   request(EXCHANGE_RATE_ENDPOINT, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       app.locals.exchange_rate_map = JSON.parse(body);
-      res.send({
-        usd: app.locals.exchange_rate_map['btc_to_usd']
-      });
+      jsonp({ usd: app.locals.exchange_rate_map['btc_to_usd']}, req, res);
     }
     else {
-      res.send({
-        error: error
-      });
+      jsonp({ error: error }, req, res);
     }
   });
 }
@@ -60,10 +65,10 @@ exports.attach = function(app) {
       refreshExchangeRateCache(app, req, res);
     }
     else if (fromExchangeRate) { 
-      res.send(getExchangeRate(app, fromExchangeRate, toExchangeRate, valueExchangeRate));
+      jsonp(getExchangeRate(app, fromExchangeRate, toExchangeRate, valueExchangeRate), req, res);
     }
     else {
-      res.send(getExchangeRate(app, 'btc', 'usd', '1'));
+      jsonp(getExchangeRate(app, 'btc', 'usd', '1'), req, res);
     }
   });
 };
