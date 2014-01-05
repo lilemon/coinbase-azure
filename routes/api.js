@@ -82,4 +82,4 @@ exports.attach = function(app) {
       res.jsonp(rateObj, req, res);
     });
   });
-}re
+}
