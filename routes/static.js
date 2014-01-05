@@ -1,7 +1,14 @@
-﻿exports.attach = function(app) {
+﻿var api = require('./api');
+
+exports.attach = function(app) {
   app.get('/', function(req, res) {
-    res.render('index', {
-      usd: app.locals.exchange_rate_map['btc_to_usd']
+    req.query.app = app;
+    req.query.from = req.query.from || 'btc';
+    req.query.to = req.query.to || 'usd';
+
+    api.getExchangeRate(req.query, function(obj) {
+      console.log('static', obj);
+      res.render('index', obj);
     });
   });
 };

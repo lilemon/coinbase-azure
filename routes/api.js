@@ -2,73 +2,84 @@
     BASE_URL = 'https://coinbase.com/api/v1/',
     EXCHANGE_RATE_ENDPOINT = BASE_URL + 'currencies/exchange_rates';
 
-function jsonp(data, req, res) {
-  if (req.query.callback) {
-    res.send(req.query.callback + '(' + JSON.stringify(data) + ');');
-  }
-  else {
-    res.send(data);
-  }
-}
+var getExchangeRate = exports.getExchangeRate = function(params, callback) {
+  var app = params.app,
+      forced = params.forced || false,
+      from = params.from,
+      to = params.to || 'btc',
+      value = params.value || '1.0';
 
-function refreshExchangeRateCache(app, req, res) {
-  request(EXCHANGE_RATE_ENDPOINT, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      app.locals.exchange_rate_map = JSON.parse(body);
-      jsonp({ usd: app.locals.exchange_rate_map['btc_to_usd']}, req, res);
+  getExchangeRateCache = function(cacheCallback) {
+    if (forced || Object.keys(app.locals.exchange_rate_map).length === 0) {
+      request(EXCHANGE_RATE_ENDPOINT, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          app.locals.exchange_rate_map = JSON.parse(body);
+        }
+        else {
+          console.error('Refreshing coinbase service error', error);
+        }
+        cacheCallback(app.locals.exchange_rate_map);
+      });
     }
     else {
-      jsonp({ error: error }, req, res);
+      cacheCallback(app.locals.exchange_rate_map);
     }
+  },
+
+  readExchangeRate = function(exchangeRateMap, fromArg, toArg, valueArg) {
+    var exchangeRateString = '',
+        exchangeRate = 1,
+        exchangeKey;
+
+    fromArg = fromArg.toLowerCase();
+    toArg = toArg.toLowerCase();
+    valueArg = parseFloat(valueArg);
+    exchangeKey = fromArg + '_to_' + toArg;
+
+    exchangeRateString = exchangeRateMap[exchangeKey];
+    if (!exchangeRateString) {
+      return {
+        error: 'Internal Server Error'
+      };
+    }
+
+    exchangeRate = parseFloat(exchangeRateString);
+    if (!exchangeRate) {
+      return {
+        error: 'Internal Service Error: ' + exchangeKey
+      };
+    }
+
+    return {
+      from: {
+        currency: fromArg,
+        value: valueArg
+      },
+      to: {
+        currency: toArg,
+        value: exchangeRate * valueArg
+      } 
+    };
+  };
+
+  getExchangeRateCache(function(exchangeRateMap) {
+    var rate;
+    if (from) { 
+      rate = readExchangeRate(exchangeRateMap, from, to, value);
+    }
+    else {
+      rate = readExchangeRate(exchangeRateMap, 'btc', 'usd', value);
+    }
+    callback(rate);
   });
-}
-
-function getExchangeRate(app, from, to, value) {
-  var exchangeRateObj = {},
-      exchangeRateString = '',
-      exchangeRate = 1,
-      exchangeKey = from + '_to_' + to;
-
-  from = from.toLowerCase();
-  to = to.toLowerCase();
-  value = parseFloat(value);
-
-  exchangeRateString = app.locals.exchange_rate_map[exchangeKey];
-  if (!exchangeRateString) {
-    return {
-      error: 'Internal Server Error'
-    };
-  }
-  console.log(exchangeRateString);
-  exchangeRate = parseFloat(exchangeRateString);
-  if (!exchangeRate) {
-    return {
-      error: 'Internal Service Error: ' + exchangeKey
-    };
-  }
-
-  exchangeRateObj[to] = value;
-  exchangeRateObj[from] = exchangeRate * value;
-  return exchangeRateObj;
 }
 
 exports.attach = function(app) {
   app.locals.exchange_rate_map = {};
-
   app.get('/api/exchange_rate', function(req, res) {
-    var fromExchangeRate = req.query.from,
-        toExchangeRate = req.query.to || 'btc',
-        valueExchangeRate = req.query.value || 1,
-        isForced = req.query.force;
-
-    if (isForced) {
-      refreshExchangeRateCache(app, req, res);
-    }
-    else if (fromExchangeRate) { 
-      jsonp(getExchangeRate(app, fromExchangeRate, toExchangeRate, valueExchangeRate), req, res);
-    }
-    else {
-      jsonp(getExchangeRate(app, 'btc', 'usd', '1'), req, res);
-    }
+    req.query.app = app;
+    getExchangeRate(req.query, function(rateObj) {
+      res.jsonp(rateObj, req, res);
+    });
   });
-};
+}re
