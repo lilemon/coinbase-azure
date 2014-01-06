@@ -1,9 +1,8 @@
 ﻿h1, h2, h3, h4 {
     font-family: "Segoe UI Light","Segoe WP Light","Segoe UI","Segoe WP",Tahoma,Verdana,Arial,sans-serif;
     font-weight: 300;
-    color: #1a1a1a;
     line-height: 1.25;
-    margin: .25em 0 .75em;
+    margin: 5px;
     font-size: 1.82em;
 }
 
@@ -17,8 +16,23 @@ body, html {
     font-family: "Segoe UI","Lucida Grande",Verdana,Arial,Helvetica,sans-serif;
     background: #fff;
     color: #2a2a2a;
+    margin: 0;
 }
 
+header {
+    background-color: #2a2a2a;
+    color: #fff;
+    padding: 10px;
+}
+
+section {
+    padding: 5px 10px;
+}
+
+footer {
+    font-size: 0.75em;
+    padding: 5px 10px;
+}
 @-ms-viewport {
     width: device-width;
 }
