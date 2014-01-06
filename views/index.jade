@@ -2,4 +2,7 @@
 
 block content
   h1 Coinbase Azure
-  p #{from.value} #{from.currency.toUpperCase()} = #{to.value} #{to.currency.toUpperCase()}
+  if error
+    p #{error}
+  else
+    p #{from.value} #{from.currency.toUpperCase()} = #{to.value} #{to.currency.toUpperCase()}
