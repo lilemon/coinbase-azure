@@ -4,13 +4,13 @@
 
 var getExchangeRate = exports.getExchangeRate = function(params, callback) {
   var app = params.app,
-      forced = params.forced || false,
+      force = params.force || false,
       from = params.from,
       to = params.to || 'btc',
       value = params.value || '1.0';
 
   getExchangeRateCache = function(cacheCallback) {
-    if (forced || Object.keys(app.locals.exchange_rate_map).length === 0) {
+    if (force || Object.keys(app.locals.exchange_rate_map).length === 0) {
       request(EXCHANGE_RATE_ENDPOINT, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           app.locals.exchange_rate_map = JSON.parse(body);

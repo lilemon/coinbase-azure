@@ -5,9 +5,7 @@ exports.attach = function(app) {
     req.query.app = app;
     req.query.from = req.query.from || 'btc';
     req.query.to = req.query.to || 'usd';
-
     api.getExchangeRate(req.query, function(obj) {
-      console.log('static', obj);
       res.render('index', obj);
     });
   });
